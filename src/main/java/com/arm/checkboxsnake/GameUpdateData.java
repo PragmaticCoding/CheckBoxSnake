@@ -1,7 +1,5 @@
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
-
-import checkboxsnake.Direction;
 
 /*
  * Copyright (c) 2018 by ARM GmbH, www.ablex.com

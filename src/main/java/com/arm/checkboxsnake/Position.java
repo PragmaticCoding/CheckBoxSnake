@@ -4,7 +4,7 @@
  * created on 06.04.2018 - 14:43:49
  * edited by dnolte 06.04.2018 - 14:43:49
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import java.util.Objects;
 import javafx.beans.property.IntegerProperty;

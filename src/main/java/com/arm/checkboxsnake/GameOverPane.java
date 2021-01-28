@@ -4,7 +4,7 @@
  * created on 07.04.2018 - 09:26:44
  * edited by dnolte 07.04.2018 - 09:26:44
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;

@@ -4,7 +4,7 @@
  * created on 06.04.2018 - 14:10:15
  * edited by dnolte 06.04.2018 - 14:10:15
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import java.net.URL;
 import java.util.ResourceBundle;

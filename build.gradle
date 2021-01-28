@@ -1,67 +1,31 @@
 plugins {
-    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.8'
-    id 'org.mikeneck.graalvm-native-image' version '1.2.0'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
     id 'com.gluonhq.client-gradle-plugin' version '0.1.36'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-mainClassName = 'checkboxsnake.CheckBoxSnake'
-
 repositories {
     mavenCentral()
-}
-
-
-
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-}
-
-test {
-    useJUnitPlatform()
-}
-
-configurations.all {
-    transitive = true
-}
-
-
-javafx {
-    version = '11'
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.media']
-}
-
-nativeImage {
-    graalVmHome = "C:\\arm\\SDKs\\Java\\GraalVM\\graalvm-ce-java11-21.0.0"
-    mainClass = "checkboxsnake.CheckBoxSnake"
-    executableName = 'my-native-application'
-    outputDirectory = file("$buildDir/executable")
-    arguments {
-//        add '--no-fallback'
-//        add '--enable-all-security-services'
-////        add options.traceClassInitialization('com.example.MyDataProvider,com.example.MyDataConsumer')
-////        add '--initialize-at-run-time=com.example.runtime'
-        add '-H:+ReportExceptionStackTraces'
+    maven {
+        url 'https://nexus.gluonhq.com/nexus/content/repositories/releases'
     }
 }
 
-//generateNativeImageConfig {
-//    enabled = true
-//    byRunningApplication {
-//        stdIn("""
-//    |total: 2
-//    |contents:
-//    |  - name: foo
-//    |    size: 2052
-//    |""".stripMargin())
-//    }
-//    byRunningApplicationWithoutArguments()
-//    byRunningApplication {
-//        arguments('-h')
-//    }
-//}
+mainClassName = 'com.arm.checkboxsnake.CheckBoxSnake'
+
+dependencies {
+    compile 'com.gluonhq:charm:6.0.6'
+}
+
+javafx {
+    version = '15.0.1'
+    modules = [ 'javafx.fxml', 'javafx.controls' ,'javafx.media']
+}
+
+gluonClient {
+    // target = 'android' // Uncomment to enable Android
+    attachConfig {
+        version = "4.0.10"
+        services 'display', 'lifecycle', 'statusbar', 'storage'
+    }
+}

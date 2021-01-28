@@ -4,7 +4,7 @@
  * created on 06.04.2018 - 14:23:19
  * edited by dnolte 06.04.2018 - 14:23:19
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import javafx.scene.layout.GridPane;
 

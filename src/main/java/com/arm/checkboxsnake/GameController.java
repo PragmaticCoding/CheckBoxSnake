@@ -4,7 +4,7 @@
  * created on 06.04.2018 - 14:20:46
  * edited by dnolte 06.04.2018 - 14:20:46
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import java.util.Objects;
 import java.util.Random;

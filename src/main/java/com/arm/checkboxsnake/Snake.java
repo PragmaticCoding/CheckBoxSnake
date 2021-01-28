@@ -4,7 +4,7 @@
  * created on 06.04.2018 - 14:21:12
  * edited by dnolte 06.04.2018 - 14:21:12
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import java.util.Arrays;
 import java.util.Collection;

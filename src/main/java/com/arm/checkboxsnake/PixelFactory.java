@@ -4,7 +4,7 @@
  * created on 06.04.2018 - 14:25:52
  * edited by dnolte 06.04.2018 - 14:25:52
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 /**
  * --- here javadoc ---

@@ -4,7 +4,7 @@
  * created on 08.04.2018 - 09:59:16
  * edited by dnolte 08.04.2018 - 09:59:16
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;

@@ -4,7 +4,7 @@
  * created on 07.04.2018 - 10:51:23
  * edited by dnolte 07.04.2018 - 10:51:23
  */
-package checkboxsnake;
+package com.arm.checkboxsnake;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -17,9 +17,9 @@ import javafx.scene.media.AudioClip;
  */
 public class SoundController {
 
-    private AudioClip audioClipEat = new AudioClip(this.getClass().getResource("/checkboxsnake/resources/sounds/eat2.wav").toString());
-    private AudioClip audioClipSpecialEat = new AudioClip(this.getClass().getResource("/checkboxsnake/resources/sounds/eat.mp3").toString());
-    private AudioClip audioClipGameOver = new AudioClip(this.getClass().getResource("/checkboxsnake/resources/sounds/gameover.mp3").toString());
+    private AudioClip audioClipEat = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/eat2.wav").toString());
+    private AudioClip audioClipSpecialEat = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/eat.mp3").toString());
+    private AudioClip audioClipGameOver = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/gameover.mp3").toString());
 
     private static SoundController instance = null;
 

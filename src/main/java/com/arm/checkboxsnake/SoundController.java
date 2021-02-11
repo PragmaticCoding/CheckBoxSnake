@@ -17,9 +17,9 @@ import javafx.scene.media.AudioClip;
  */
 public class SoundController {
 
-    private AudioClip audioClipEat = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/eat2.wav").toString());
-    private AudioClip audioClipSpecialEat = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/eat.mp3").toString());
-    private AudioClip audioClipGameOver = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/gameover.mp3").toString());
+//    private AudioClip audioClipEat = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/eat2.wav").toString());
+//    private AudioClip audioClipSpecialEat = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/eat.mp3").toString());
+//    private AudioClip audioClipGameOver = new AudioClip(this.getClass().getResource("/com/arm/checkboxsnake/resources/sounds/gameover.mp3").toString());
 
     private static SoundController instance = null;
 
@@ -42,24 +42,24 @@ public class SoundController {
     }
 
     private void initGameOverSound() {
-        audioClipGameOver.setVolume(.3);
+//        audioClipGameOver.setVolume(.3);
     }
 
     public void playSound(Sound sound) {
-        System.out.println("play sound " + sound + ". sound enabed " + soundEnabledProperty.get());
-        if (soundEnabledProperty.get()) {
-            switch (sound) {
-                case EAT:
-                    audioClipEat.play();
-                    break;
-                case SPECIAL_EAT:
-                    audioClipSpecialEat.play();
-                    break;
-                case GAME_OVER:
-                    audioClipGameOver.play();
-                    break;
-            }
-        }
+//        System.out.println("play sound " + sound + ". sound enabed " + soundEnabledProperty.get());
+//        if (soundEnabledProperty.get()) {
+//            switch (sound) {
+//                case EAT:
+//                    audioClipEat.play();
+//                    break;
+//                case SPECIAL_EAT:
+//                    audioClipSpecialEat.play();
+//                    break;
+//                case GAME_OVER:
+//                    audioClipGameOver.play();
+//                    break;
+//            }
+//        }
     }
 
     public enum Sound {

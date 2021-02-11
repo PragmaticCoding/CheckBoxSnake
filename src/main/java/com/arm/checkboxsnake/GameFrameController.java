@@ -47,7 +47,7 @@ public class GameFrameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        rootPane.getStylesheets().add("/checkboxsnake/css/styles.css");
+//        rootPane.getStylesheets().add("/checkboxsnake/css/styles.css");
 
         gameField = new GameField(new Snake(), 15);
         gameController = new GameController(this, gameField, 150);

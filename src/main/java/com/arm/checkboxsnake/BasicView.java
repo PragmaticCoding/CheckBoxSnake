@@ -13,6 +13,7 @@ public class BasicView extends View {
     public BasicView()  {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameFrame.fxml"));
+        fxmlLoader.setController(new GameFrameController());
 //        Parent root = FXMLLoader.load(getClass().getResource("GameFrame.fxml"));
 
         try {

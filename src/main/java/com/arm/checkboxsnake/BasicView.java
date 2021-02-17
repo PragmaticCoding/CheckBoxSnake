@@ -11,10 +11,7 @@ import java.io.IOException;
 public class BasicView extends View {
 
     public BasicView()  {
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameFrame.fxml"));
-        fxmlLoader.setController(new GameFrameController());
-//        Parent root = FXMLLoader.load(getClass().getResource("GameFrame.fxml"));
 
         try {
             this.setCenter(fxmlLoader.load());
@@ -36,5 +33,4 @@ public class BasicView extends View {
         appBar.setTitleText("Basic View");
         appBar.getActionItems().add(MaterialDesignIcon.SEARCH.button(e -> System.out.println("Search")));
     }
-
 }

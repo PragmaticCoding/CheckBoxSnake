@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 
 public class CheckBoxSnake extends MobileApplication {
 
+    public CheckBoxSnake() {
+    }
+
     @Override
     public void init() {
         addViewFactory(HOME_VIEW, BasicView::new);

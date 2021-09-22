@@ -2,6 +2,11 @@
 
 A small javafx based snake game made by simple elements of javafx.
 
+##Enviorment
+- java 11
+- javafx17
+- gradle-wrapper 6.4
+
 ##Features
 
 - sounds

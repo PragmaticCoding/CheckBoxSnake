@@ -1,6 +1,6 @@
 [
   {
-    "name" : "com.arm.checkboxsnake.GameFrameController",
+    "name" : "javafx.checkboxsnake.GameFrameController",
     "allDeclaredConstructors" : true,
     "allPublicConstructors" : true,
     "allDeclaredFields" : true,

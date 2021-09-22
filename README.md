@@ -1,6 +1,7 @@
 # CheckBoxSnake
 
-A small javafx based snake game made by simple elements of javafx.
+A small javafx based snake game made by simple elements of javafx.\
+Type ``./gradlew run`` to run the application.
 
 ## Enviorment
 - java 11
@@ -12,9 +13,9 @@ A small javafx based snake game made by simple elements of javafx.
 - sounds
 - transitions
 - animated score view
-- special food appear every x game loop count
+- special food appears every x game loop count
 - different pixel implementation like RadioButtonPixel
-- started to use gluon, to bring this application on android or as an native windows application
+- started to use gluon, to bring this application on android or as a native windows application
 - GameSettings class file to set configurations of the game
 
 ## Whats missing

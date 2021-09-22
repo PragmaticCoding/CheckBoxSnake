@@ -2,12 +2,12 @@
 
 A small javafx based snake game made by simple elements of javafx.
 
-##Enviorment
+###Enviorment
 - java 11
 - javafx17
 - gradle-wrapper 6.4
 
-##Features
+###Features
 
 - sounds
 - transitions
@@ -17,7 +17,7 @@ A small javafx based snake game made by simple elements of javafx.
 - started to use gluon, to bring this application on android or as an native windows application
 - GameSettings class file to set configurations of the game
 
-##Whats missing
+###Whats missing
 
 - unit tests
 - javadoc

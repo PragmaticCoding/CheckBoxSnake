@@ -1,11 +1,6 @@
-/*
- * Copyright (c) 2018 by ARM GmbH, www.ablex.com
- * GameOverPane.java
- * created on 07.04.2018 - 09:26:44
- * edited by dnolte 07.04.2018 - 09:26:44
- */
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.pane;
 
+import com.arm.checkboxsnake.game.GameFrameController;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

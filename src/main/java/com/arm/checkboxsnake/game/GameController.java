@@ -1,15 +1,14 @@
-/*
- * Copyright (c) 2018 by ARM GmbH, www.ablex.com
- * GameController.java
- * created on 06.04.2018 - 14:20:46
- * edited by dnolte 06.04.2018 - 14:20:46
- */
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.game;
 
 import java.util.Objects;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import com.arm.checkboxsnake.data.Direction;
+import com.arm.checkboxsnake.data.Position;
+import com.arm.checkboxsnake.data.Snake;
+import com.arm.checkboxsnake.pane.GameField;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -34,7 +33,6 @@ public class GameController {
     private Direction inputDirection = Direction.RIGHT;
     private Direction executedDirection = null;
 
-    private Position startPosition;
     private Position currentPosition;
     private Position foodPosition;
     private Position specialFoodPosition;
@@ -73,20 +71,17 @@ public class GameController {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    gameFrameController.gameIsUpdated(buildGameUpdateData());
                     updateGame();
                     gameLoopCount++;
                 });
             }
-        }, 0, speed);
+        }, 0, 200);
     }
 
     private void updateGame() {
         Position nextPosition = getNextPosition(inputDirection);
         if (!gameField.isPositionInBounds(nextPosition) && !snake.isClashing(nextPosition)) {
-            /*if (gameLoopCounts % 3 == 0) {
-                
-            } else*/ if (!snake.isEmpty() && !isFoodHit(nextPosition) && !isSpecialFoodHit(nextPosition)) {
+            if (!snake.isEmpty() && !isFoodHit(nextPosition) && !isSpecialFoodHit(nextPosition)) {
                 gameField.unsetPixel(snake.removeLastPosition());
             } else if (isFoodHit(nextPosition)) {
                 System.out.println("ate");
@@ -115,12 +110,6 @@ public class GameController {
             gameFrameController.gameOver();
         }
 
-    }
-
-    private GameUpdateData buildGameUpdateData() {
-        GameUpdateData gameUpdateData = new GameUpdateData(inputDirection);
-
-        return gameUpdateData;
     }
 
     private void increasePoints() {
@@ -156,7 +145,6 @@ public class GameController {
             case RIGHT:
                 inputDirection = executedDirection == Direction.LEFT ? executedDirection : Direction.RIGHT;
                 break;
-
         }
     }
 
@@ -188,7 +176,7 @@ public class GameController {
         Random random = new Random();
 
         Position randomPosition = null;
-        while (randomPosition == null || snake.isNear(randomPosition, 1)) {
+        while (randomPosition == null || snake.isNear(randomPosition)) {
             int randomX = random.nextInt(gameField.getGameFieldSize());
             int randomY = random.nextInt(gameField.getGameFieldSize());
 
@@ -207,15 +195,13 @@ public class GameController {
     }
 
     private void initStartPositions() {
-        startPosition = new Position(gameField.getGameFieldSize() / 2, gameField.getGameFieldSize() / 2);
         currentPosition = new Position(gameField.getGameFieldSize() / 2, gameField.getGameFieldSize() / 2);
         snake.resetSnake();
         snake.addPosition(currentPosition);
     }
 
     private boolean isGenerateSpecialFood() {
-        return false;
-//        return gameLoopCount != 0 && gameLoopCount % 30 == 0;
+        return GameSettings.SPECIAL_FOOD_ENABLED && gameLoopCount != 0 && gameLoopCount % GameSettings.GAME_LOOPS_TILL_SPECIAL_FOOD == 0;
     }
 
     private void generateSpecialFood() {
@@ -227,5 +213,4 @@ public class GameController {
     private void increaseSpecialPoints() {
         pointsProperty.set(pointsProperty.get() + 5);
     }
-
 }

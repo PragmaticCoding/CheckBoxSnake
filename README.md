@@ -1,46 +1,25 @@
-# Gluon Mobile - Single View
+# CheckBoxSnake
 
-Gluon Mobile Applications are Java application written in JavaFX.
-These applications ensure that developers can create high performance, great looking, and cloud connected mobile apps from a single Java code base.
+A small javafx based snake game made by simple elements of javafx.
 
-This sample contains a simple Gluon Mobile application which can be used to run, test and create a native application for any targeted device.
+##Features
 
-## Pre-requisites
+- sounds
+- transitions
+- animated score view
+- special food appear every x game loop count
+- different pixel implementation like RadioButtonPixel
+- started to use gluon, to bring this application on android or as an native windows application
+- GameSettings class file to set configurations of the game
 
-Please checkout the prerequisites to run this application [here](https://github.com/gluonhq/client-maven-plugin#requirements).
+##Whats missing
 
-## Instructions
+- unit tests
+- javadoc
+- a special food implementation for RadionButtonPixel
+- enhance the special food feature
+- complete gluon support for android, windows
 
-> **Note**: The following are command line instructions. For IDE specific instructions please checkout
-[IDE documentation](https://docs.gluonhq.com/client/#_ide) of the client plugin.
-
-These application can run on the JVM on desktop platforms. To run the application, execute the following command:
-
-```
-./gradlew run
-```
-
-The same application can also run natively for on any targeted OS, including Android, iOS, Linux, Mac and Windows.
-
-To create a native image, execute the following command:
-
-```
-./gradlew nativeBuild nativeRun
-```
-
-> **Note**: The above client commands are target-platform dependent and might change depending on the platform.
-For more details, please check
-[Client Gradle Tasks](https://github.com/gluonhq/client-gradle-plugin/#2-tasks)
-
-## Configuration
-
-To configure the client plugin, please checkout the [Configuration documentation](https://docs.gluonhq.com/client/#_configuration).
-
-## More information
-
-Here are some helpful links:
-
-* [Gluon Client documentation](https://docs.gluonhq.com/client)
-* [Gluon Mobile documentation](https://docs.gluonhq.com/mobile)
-* [Client Maven Plugin](https://github.com/gluonhq/client-maven-plugin)
-* [Client Gradle Plugin](https://github.com/gluonhq/client-gradle-plugin)
+### Screenshots
+![Screenshot (1)](https://i.ibb.co/7pnfbxy/checkboxsnake1.png)
+![Screenshot (2)](https://i.ibb.co/P5x7WwQ/checkboxsnake2.png)

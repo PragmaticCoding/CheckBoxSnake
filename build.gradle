@@ -11,14 +11,14 @@ repositories {
     }
 }
 
-mainClassName = 'com.arm.checkboxsnake.CheckBoxSnake'
+mainClassName = 'com.arm.checkboxsnake.main.CheckBoxSnakeDesktop'
 
 dependencies {
     compile 'com.gluonhq:charm:6.0.6'
 }
 
 javafx {
-    version = '15.0.1'
+    version = '17'
     modules = [ 'javafx.fxml', 'javafx.controls' ,'javafx.media']
 }
 

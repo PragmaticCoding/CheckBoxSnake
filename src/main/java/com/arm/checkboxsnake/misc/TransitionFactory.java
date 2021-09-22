@@ -1,10 +1,4 @@
-/*
- * Copyright (c) 2018 by ARM GmbH, www.ablex.com
- * TransitionFactory.java
- * created on 08.04.2018 - 09:59:16
- * edited by dnolte 08.04.2018 - 09:59:16
- */
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.misc;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;

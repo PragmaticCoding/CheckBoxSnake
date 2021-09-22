@@ -1,11 +1,9 @@
-/*
- * Copyright (c) 2018 by ARM GmbH, www.ablex.com
- * GameField.java
- * created on 06.04.2018 - 14:23:19
- * edited by dnolte 06.04.2018 - 14:23:19
- */
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.pane;
 
+import com.arm.checkboxsnake.pixel.PixelFactory;
+import com.arm.checkboxsnake.data.Snake;
+import com.arm.checkboxsnake.data.Position;
+import com.arm.checkboxsnake.pixel.Pixel;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -62,7 +60,7 @@ public class GameField extends GridPane {
     }
 
     private void initGameField() {
-        this.setHgap(-5);
+        this.setHgap(1);
         this.setVgap(1);
 
         for (int width = 0; width < gameFieldSize; width++) {

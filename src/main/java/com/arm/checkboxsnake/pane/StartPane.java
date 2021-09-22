@@ -1,11 +1,7 @@
-/*
- * Copyright (c) 2018 by ARM GmbH, www.ablex.com
- * GameOverPane.java
- * created on 07.04.2018 - 09:26:44
- * edited by dnolte 07.04.2018 - 09:26:44
- */
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.pane;
 
+import com.arm.checkboxsnake.game.GameFrameController;
+import com.arm.checkboxsnake.sound.SoundController;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -49,7 +45,7 @@ public class StartPane extends VBox {
 
     private void initPane() {
         this.setAlignment(Pos.CENTER);
-        this.setBackground(new Background(new BackgroundFill(Color.WHITE.deriveColor(1, 1, 1, .8), CornerRadii.EMPTY, Insets.EMPTY)));
+        this.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY.deriveColor(1, 1, 1, .8), CornerRadii.EMPTY, Insets.EMPTY)));
 
         this.getChildren().add(labelStart);
         this.getChildren().add(checkBoxSoundEnabled);

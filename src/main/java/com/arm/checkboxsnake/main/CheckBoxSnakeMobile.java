@@ -1,4 +1,4 @@
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.main;
 
 import com.gluonhq.charm.glisten.application.MobileApplication;
 import com.gluonhq.charm.glisten.visual.Swatch;
@@ -6,9 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class CheckBoxSnake extends MobileApplication {
+public class CheckBoxSnakeMobile extends MobileApplication {
 
-    public CheckBoxSnake() {
+    public CheckBoxSnakeMobile() {
     }
 
     @Override
@@ -20,7 +20,7 @@ public class CheckBoxSnake extends MobileApplication {
     public void postInit(Scene scene) {
         Swatch.BLUE.assignTo(scene);
 
-        ((Stage) scene.getWindow()).getIcons().add(new Image(CheckBoxSnake.class.getResourceAsStream("/icon.png")));
+        ((Stage) scene.getWindow()).getIcons().add(new Image(CheckBoxSnakeMobile.class.getResourceAsStream("/icon.png")));
     }
 
     public static void main(String args[]) {

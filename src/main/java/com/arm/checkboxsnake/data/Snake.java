@@ -1,15 +1,11 @@
-/*
- * Copyright (c) 2018 by ARM GmbH, www.ablex.com
- * Snake.java
- * created on 06.04.2018 - 14:21:12
- * edited by dnolte 06.04.2018 - 14:21:12
- */
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.data;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import com.arm.checkboxsnake.data.Position;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -48,8 +44,8 @@ public class Snake {
         return queueSnakePositions.contains(position);
     }
     
-    public boolean isNear(Position position, int radius) {
-        return getNearPositions(position, radius).stream().anyMatch((Position t) -> queueSnakePositions.contains(t));
+    public boolean isNear(Position position) {
+        return getNearPositions(position).stream().anyMatch((Position t) -> queueSnakePositions.contains(t));
     }
 
     public boolean isEmpty() {
@@ -60,7 +56,7 @@ public class Snake {
         lengthProperty.set(queueSnakePositions.size());
     }
     
-    private Collection<Position> getNearPositions(Position position, int radius){
+    private Collection<Position> getNearPositions(Position position){
         Position position1 = new Position(position.xPositionProperty().get() + 1, position.yPositionProperty().get() + 1);
         Position position2 = new Position(position.xPositionProperty().get() - 1, position.yPositionProperty().get() - 1);
         Position position3 = new Position(position.xPositionProperty().get() + 1, position.yPositionProperty().get() - 1);
@@ -72,5 +68,4 @@ public class Snake {
         
         return Arrays.asList(position1, position2, position3, position4, position5, position6, position7, position8);
     }
-
 }

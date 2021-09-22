@@ -1,5 +1,6 @@
-package com.arm.checkboxsnake;
+package com.arm.checkboxsnake.main;
 
+import com.arm.checkboxsnake.game.GameFrameController;
 import com.gluonhq.charm.glisten.control.AppBar;
 import com.gluonhq.charm.glisten.mvc.View;
 import com.gluonhq.charm.glisten.visual.MaterialDesignIcon;

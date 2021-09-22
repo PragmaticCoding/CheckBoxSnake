@@ -16,7 +16,7 @@
          <children>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
                <children>
-                  <Label text="Punkte:">
+                  <Label text="Score:">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font></Label>

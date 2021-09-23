@@ -1,7 +1,7 @@
 # CheckBoxSnake
 
 A small javafx based snake game made by simple elements of javafx.\
-Type ``./gradlew run`` to run the application.
+Type ``./gradlew run`` to run the application. Use arrow keys to play.
 
 ## Enviorment
 - java 11

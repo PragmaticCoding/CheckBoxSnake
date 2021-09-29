@@ -1,98 +1,44 @@
 package javafx.checkboxsnake.misc;
 
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.animation.Interpolator;
-import javafx.animation.ParallelTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.SequentialTransition;
-import javafx.animation.Transition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
-/**
- * --- here javadoc ---
- *
- * @author dnolte
- */
 public class TransitionFactory {
 
-    public static Transition getFadeTransition(Node node, double from, double to, double duration, EventHandler eventHandler) {
+    public static Transition getFadeTransition(Node node, double from, double to, double duration) {
         prepareNode(node);
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(duration), node);
-        prepareTransition(fadeTransition);
         fadeTransition.setFromValue(from);
         fadeTransition.setToValue(to);
-        fadeTransition.setOnFinished(eventHandler);
-
-        return fadeTransition;
+        return prepareTransition(fadeTransition);
     }
 
-    public static Transition getFromToScaleTransition(Node node, double fromX, double fromY, double toX, double toY, double duration, EventHandler eventHandler) {
-        prepareNode(node);
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(duration), node);
-        scaleTransition.setToX(toX);
-        scaleTransition.setToY(toY);
-        scaleTransition.setFromX(fromX);
-        scaleTransition.setFromY(fromY);
-
-        prepareTransition(scaleTransition);
-
-        scaleTransition.setOnFinished(eventHandler);
-
-        return scaleTransition;
-    }
-
-    public static Transition getFromToTranslateTransition(Node node, double fromX, double fromY, double toX, double toY, double duration, EventHandler eventHandler) {
+    public static Transition getFromToTranslateTransition(Node node, double fromX, double fromY, double toX, double toY, double duration) {
         prepareNode(node);
         TranslateTransition translateTransition = new TranslateTransition(Duration.millis(duration), node);
         translateTransition.setToX(toX);
         translateTransition.setToY(toY);
         translateTransition.setFromX(fromX);
         translateTransition.setFromY(fromY);
-
-        prepareTransition(translateTransition);
-
-        translateTransition.setOnFinished(eventHandler);
-
-        return translateTransition;
+        return prepareTransition(translateTransition);
     }
 
-    public static Transition getParallelTransition(EventHandler eventHandler, Animation... animation) {
-        ParallelTransition parallelTransition = new ParallelTransition(animation);
-        if (eventHandler != null) {
-            parallelTransition.setOnFinished(eventHandler);
-        }
-        prepareTransition(parallelTransition);
-        return parallelTransition;
-    }
-
-    public static Transition getSequentialTransition(EventHandler eventHandler, Animation... animation) {
+    public static Transition getSequentialTransition(EventHandler<ActionEvent> eventHandler, Animation... animation) {
         SequentialTransition sequentialTransition = new SequentialTransition(animation);
-        if (eventHandler != null) {
-            sequentialTransition.setOnFinished(eventHandler);
-        }
-        prepareTransition(sequentialTransition);
-
-        return sequentialTransition;
+        sequentialTransition.setOnFinished(eventHandler);
+        return prepareTransition(sequentialTransition);
     }
-    
-        public static Transition getRotateTransition(Node node, double rotation, double duration, EventHandler eventHandler) {
-//        prepareNode(node);
-        RotateTransition rotateTransition = new RotateTransition(Duration.millis(duration));
 
+    public static Transition getRotateTransition(Node node, double rotation, double duration, EventHandler<ActionEvent> eventHandler) {
+        RotateTransition rotateTransition = new RotateTransition(Duration.millis(duration));
         rotateTransition.setNode(node);
         rotateTransition.setByAngle(rotation);
-
-        prepareTransition(rotateTransition);
-
         rotateTransition.setOnFinished(eventHandler);
-
-        return rotateTransition;
+        return prepareTransition(rotateTransition);
     }
 
     private static void prepareNode(Node node) {
@@ -100,8 +46,9 @@ public class TransitionFactory {
         node.setCacheHint(CacheHint.SPEED);
     }
 
-    private static void prepareTransition(Transition transition) {
+    private static Transition prepareTransition(Transition transition) {
         transition.setInterpolator(Interpolator.EASE_BOTH);
+        return transition;
     }
 
 }

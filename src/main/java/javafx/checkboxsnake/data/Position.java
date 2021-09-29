@@ -1,8 +1,8 @@
 package javafx.checkboxsnake.data;
 
+import javafx.checkboxsnake.game.GameSettings;
+
 import java.util.Objects;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * --- here javadoc ---
@@ -11,27 +11,27 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public class Position {
 
-    private IntegerProperty xPositionProperty = new SimpleIntegerProperty();
-    private IntegerProperty yPositionProperty = new SimpleIntegerProperty();
+    private final int column;
+    private final int row;
 
     public Position(int xPosition, int yPosition) {
-        this.xPositionProperty.set(xPosition);
-        this.yPositionProperty.set(yPosition);
+        column = xPosition;
+        row = yPosition;
     }
 
-    public IntegerProperty xPositionProperty() {
-        return xPositionProperty;
+    public int getColumn() {
+        return column;
     }
 
-    public IntegerProperty yPositionProperty() {
-        return yPositionProperty;
+    public int getRow() {
+        return row;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.xPositionProperty.get());
-        hash = 67 * hash + Objects.hashCode(this.yPositionProperty.get());
+        hash = 67 * hash + Objects.hashCode(column);
+        hash = 67 * hash + Objects.hashCode(row);
         return hash;
     }
 
@@ -47,12 +47,24 @@ public class Position {
             return false;
         }
         final Position other = (Position) obj;
-        if (!Objects.equals(this.xPositionProperty.get(), other.xPositionProperty.get())) {
-            return false;
-        }
-        if (!Objects.equals(this.yPositionProperty.get(), other.yPositionProperty.get())) {
-            return false;
-        }
-        return true;
+        return (column == other.getColumn()) && (row == other.getRow());
+    }
+
+    public Position getNextPosition(Direction direction) {
+        return new Position(column + (direction.equals(Direction.RIGHT) ? 1 : 0) + (direction.equals(Direction.LEFT) ? -1 : 0),
+                row + (direction.equals(Direction.DOWN) ? 1 : 0) + (direction.equals(Direction.UP) ? -1 : 0));
+    }
+
+    public boolean isPositionInBounds() {
+        return (column >= 0) && (row >= 0) &&
+                (column < GameSettings.GAME_FIELD_SIZE) && row < (GameSettings.GAME_FIELD_SIZE);
+    }
+
+    public boolean isNear(Position position) {
+        return (Math.abs(column - position.getColumn()) <= 1) && (Math.abs(row - position.getRow()) <= 1);
+    }
+
+    public String toString() {
+        return "(" + column + ", " + row + ")";
     }
 }

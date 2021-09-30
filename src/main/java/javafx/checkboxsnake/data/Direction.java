@@ -4,11 +4,6 @@ import javafx.scene.input.KeyCode;
 
 import java.util.Optional;
 
-/**
- * --- here javadoc ---
- *
- * @author dnolte
- */
 public enum Direction {
     UP,
     DOWN,
@@ -17,13 +12,13 @@ public enum Direction {
 
     public static Optional<Direction> fromKeyCode(KeyCode keyCode) {
         switch (keyCode) {
-            case UP :
-              return Optional.of(UP);
-            case DOWN :
+            case UP:
+                return Optional.of(UP);
+            case DOWN:
                 return Optional.of(DOWN);
-            case LEFT :
+            case LEFT:
                 return Optional.of(LEFT);
-            case RIGHT :
+            case RIGHT:
                 return Optional.of(RIGHT);
             default:
                 return Optional.empty();
@@ -32,7 +27,7 @@ public enum Direction {
 
     public boolean isOpposite(Direction testDirection) {
         switch (this) {
-            case UP :
+            case UP:
                 return testDirection.equals(DOWN);
             case DOWN:
                 return testDirection.equals(UP);

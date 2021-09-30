@@ -16,11 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-/**
- * --- here javadoc ---
- *
- * @author dnolte
- */
 public class GameOverPane extends VBox {
 
     public GameOverPane(Runnable gameStarter, ObservableIntegerValue points, ObservableBooleanValue gameOverProperty) {
@@ -40,9 +35,7 @@ public class GameOverPane extends VBox {
 
     private Button createRestartButton(Runnable gameStarter) {
         Button buttonRestart = new Button("Restart");
-        buttonRestart.setOnAction((ActionEvent event) -> {
-            gameStarter.run();
-        });
+        buttonRestart.setOnAction((ActionEvent event) -> gameStarter.run());
         return buttonRestart;
     }
 }

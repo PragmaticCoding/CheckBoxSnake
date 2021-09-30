@@ -6,11 +6,6 @@ import javafx.scene.media.AudioClip;
 
 import java.util.Objects;
 
-/**
- * --- here javadoc ---
- *
- * @author dnolte
- */
 public class SoundController {
 
     private static final AudioClip audioClipEat = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/eat2.wav")).toString());

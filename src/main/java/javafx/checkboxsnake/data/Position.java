@@ -4,11 +4,6 @@ import javafx.checkboxsnake.game.GameSettings;
 
 import java.util.Objects;
 
-/**
- * --- here javadoc ---
- *
- * @author dnolte
- */
 public class Position {
 
     private final int column;

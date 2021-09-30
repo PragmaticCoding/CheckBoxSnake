@@ -33,14 +33,6 @@ public class TransitionFactory {
         return prepareTransition(sequentialTransition);
     }
 
-    public static Transition getRotateTransition(Node node, double rotation, double duration, EventHandler<ActionEvent> eventHandler) {
-        RotateTransition rotateTransition = new RotateTransition(Duration.millis(duration));
-        rotateTransition.setNode(node);
-        rotateTransition.setByAngle(rotation);
-        rotateTransition.setOnFinished(eventHandler);
-        return prepareTransition(rotateTransition);
-    }
-
     private static void prepareNode(Node node) {
         node.setCache(true);
         node.setCacheHint(CacheHint.SPEED);

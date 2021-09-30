@@ -1,7 +1,5 @@
 package javafx.checkboxsnake.data;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.checkboxsnake.game.GameSettings;
 
 import java.util.Random;
@@ -9,25 +7,22 @@ import java.util.Random;
 public class Food {
     private final static Random random = new Random();
     private final Position position;
-    private final BooleanProperty special = new SimpleBooleanProperty(false);
     private final long createTime;
+    private final boolean special;
 
 
     public Food(Position position, boolean special, long createTime) {
         this.position = position;
-        this.special.set(special);
+        this.special = special;
         this.createTime = createTime;
     }
 
     public boolean isTimeToGo(long currentGameLoop) {
+        if (!special) return false;
         return (currentGameLoop - createTime) > GameSettings.GAME_LOOPS_SPECIAL_FOOD_LIFE;
     }
 
     public boolean isSpecial() {
-        return special.get();
-    }
-
-    public BooleanProperty specialProperty() {
         return special;
     }
 

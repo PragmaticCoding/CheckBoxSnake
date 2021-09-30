@@ -15,12 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-/**
- * @author dnolte
- */
 public class GameFrame extends StackPane {
 
-    private final SoundController soundController = SoundController.getInstance();
     private final ViewModel viewModel;
 
     public GameFrame(ViewModel viewModel, Runnable gameStarter) {
@@ -33,7 +29,13 @@ public class GameFrame extends StackPane {
         setPadding(new Insets(25, 15, 25, 15));
         viewModel.gameOverProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                soundController.playSound(SoundController.Sound.GAME_OVER);
+                SoundController.playSound(SoundController.Sound.GAME_OVER);
+            }
+        });
+        viewModel.pointsProperty().addListener(((observable, oldValue, newValue) -> ateFood(((int) newValue > 0) && ((int) newValue > ((int) oldValue + 1)))));
+        viewModel.gameCounterProperty().addListener((observable, oldValue, newValue) -> {
+            if ((int) newValue > (int) oldValue) {
+                SoundController.playSound(SoundController.Sound.TIME_TICK);
             }
         });
     }
@@ -44,7 +46,10 @@ public class GameFrame extends StackPane {
         gameField.setVgap(1);
         for (int column = 0; column < GameSettings.GAME_FIELD_SIZE; column++) {
             for (int row = 0; row < GameSettings.GAME_FIELD_SIZE; row++) {
-                CheckBoxPixel pixel = new CheckBoxPixel(new Position(column, row), viewModel.getSnakePixels(), viewModel.getFood());
+                CheckBoxPixel pixel = new CheckBoxPixel(new Position(column, row),
+                        viewModel.getSnakePixels(),
+                        viewModel.foodPositionProperty(),
+                        viewModel.specialFoodPositionProperty());
                 gameField.add(pixel.getNode(), column, row);
             }
         }
@@ -57,6 +62,6 @@ public class GameFrame extends StackPane {
     }
 
     public void ateFood(boolean isFoodSpecial) {
-        soundController.playSound(isFoodSpecial ? SoundController.Sound.SPECIAL_EAT : SoundController.Sound.EAT);
+        SoundController.playSound(isFoodSpecial ? SoundController.Sound.SPECIAL_EAT : SoundController.Sound.EAT);
     }
 }

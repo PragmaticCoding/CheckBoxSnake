@@ -13,11 +13,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-/**
- * --- here javadoc ---
- *
- * @author dnolte
- */
 public class StartPane extends VBox {
 
     public StartPane(Runnable gameStarter) {
@@ -34,18 +29,13 @@ public class StartPane extends VBox {
             gameStarter.run();
         });
         buttonStart.requestFocus();
-//        buttonStart.sceneProperty().addListener((ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) -> {
-//            if (newValue != null) {
-//                buttonStart.requestFocus();
-//            }
-//        });
         return buttonStart;
     }
 
     private CheckBox initCheckBox() {
         CheckBox checkBoxSoundEnabled = new CheckBox();
         checkBoxSoundEnabled.setSelected(true);
-        SoundController.getInstance().soundEnabledProperty().bind(checkBoxSoundEnabled.selectedProperty());
+        SoundController.soundEnabledProperty().bind(checkBoxSoundEnabled.selectedProperty());
         return checkBoxSoundEnabled;
     }
 }

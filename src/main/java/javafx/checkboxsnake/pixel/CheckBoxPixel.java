@@ -1,20 +1,17 @@
 package javafx.checkboxsnake.pixel;
 
 import javafx.animation.Transition;
-import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.checkboxsnake.data.Food;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ObservableObjectValue;
 import javafx.checkboxsnake.data.Position;
-import javafx.checkboxsnake.misc.TransitionFactory;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.scene.Node;
-import javafx.scene.control.CheckBox;
-import javafx.scene.input.MouseEvent;
-
-import java.util.Optional;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  * --- here javadoc ---
@@ -23,61 +20,41 @@ import java.util.Optional;
  */
 public class CheckBoxPixel {
 
-    private final CheckBox node;
+    private final Node node;
     private final Position position;
     private final ObservableList<Position> snakePixels;
-    private final ObservableList<Food> foodList;
+    private final ObservableObjectValue<Position> regularFoodPosition;
+    private final ObservableObjectValue<Position> specialFoodPosition;
     private Transition rotateTransition = null;
-    private ObjectProperty<Food> food = new SimpleObjectProperty<>();
 
-    public CheckBoxPixel(Position position, ObservableList<Position> snakePixels, ObservableList<Food> foodList) {
+    public CheckBoxPixel(Position position,
+                         ObservableList<Position> snakePixels,
+                         ObservableObjectValue<Position> regularFoodPosition,
+                         ObservableObjectValue<Position> specialFoodPosition) {
         this.position = position;
         this.snakePixels = snakePixels;
-        this.foodList = foodList;
+        this.regularFoodPosition = regularFoodPosition;
+        this.specialFoodPosition = specialFoodPosition;
         node = buildToggleNode();
-        rotateTransition = TransitionFactory.getRotateTransition(node, Double.MAX_VALUE, 500, null);
-        rotateTransition.setCycleCount(-1);
-        foodList.addListener((InvalidationListener) (listener) -> {
-            if (getFoodForThisPixel().isPresent()) {
-                node.getStyleClass().add("check-box-food");
-                handleRotation();
-            } else {
-                node.getStyleClass().remove("check-box-food");
-                stopRotation();
-            }
-        });
-        handleRotation();
-    }
-
-    private void stopRotation() {
-        rotateTransition.stop();
-        node.setRotate(0);
-    }
-
-    private void handleRotation() {
-        getFoodForThisPixel().ifPresent(food -> {
-            if (food.isSpecial()) {
-                rotateTransition.play();
-            } else {
-                stopRotation();
-            }
-        });
-    }
-
-    private Optional<Food> getFoodForThisPixel() {
-        return foodList.stream().filter(food -> food.getPosition().equals(position)).findAny();
     }
 
     public Node getNode() {
         return node;
     }
 
-    private CheckBox buildToggleNode() {
-        CheckBox node = new CheckBox();
-        node.setFocusTraversable(false);
-        node.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
-        node.selectedProperty().bind(Bindings.createBooleanBinding(() -> snakePixels.contains(position) || getFoodForThisPixel().isPresent(), foodList, snakePixels));
+    private Node buildToggleNode() {
+        Rectangle rectangle = new Rectangle(20, 20, Color.WHITE);
+        rectangle.setStroke(Color.DARKGRAY);
+        Node snakeCircle = createCircle(Color.DARKBLUE, Bindings.createBooleanBinding(() -> snakePixels.contains(position), snakePixels));
+        Node foodCircle = createCircle(Color.GREEN, Bindings.createBooleanBinding(() -> position.equals(regularFoodPosition.get()), regularFoodPosition));
+        Node specialFoodCircle = createCircle(Color.RED, Bindings.createBooleanBinding(() -> position.equals(specialFoodPosition.get()), specialFoodPosition));
+        return new StackPane(rectangle, foodCircle, specialFoodCircle, snakeCircle);
+    }
 
-        return node;
+    private Node createCircle(Paint colour, BooleanBinding visibleBinding) {
+        Circle circle = new Circle(8);
+        circle.setFill(colour);
+        circle.visibleProperty().bind(visibleBinding);
+        return circle;
     }
 }

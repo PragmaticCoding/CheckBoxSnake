@@ -10,7 +10,9 @@ public class ViewModel {
     private final ObjectProperty<Direction> inputDirection = new SimpleObjectProperty<>(Direction.RIGHT);
     private final BooleanProperty gameOver = new SimpleBooleanProperty(false);
     private final ObservableList<Position> snakePixels = FXCollections.observableArrayList();
-    private final ObservableList<Food> food = FXCollections.observableArrayList();
+    private final ObjectProperty<Position> foodPosition = new SimpleObjectProperty<>();
+    private final ObjectProperty<Position> specialFoodPosition = new SimpleObjectProperty<>();
+    private final IntegerProperty gameCounter = new SimpleIntegerProperty(0);
 
     public int getPoints() {
         return points.get();
@@ -44,7 +46,39 @@ public class ViewModel {
         return snakePixels;
     }
 
-    public ObservableList<Food> getFood() {
-        return food;
+    public Position getFoodPosition() {
+        return foodPosition.get();
+    }
+
+    public ObjectProperty<Position> foodPositionProperty() {
+        return foodPosition;
+    }
+
+    public void setFoodPosition(Position foodPosition) {
+        this.foodPosition.set(foodPosition);
+    }
+
+    public Position getSpecialFoodPosition() {
+        return specialFoodPosition.get();
+    }
+
+    public ObjectProperty<Position> specialFoodPositionProperty() {
+        return specialFoodPosition;
+    }
+
+    public void setSpecialFoodPosition(Position specialFoodPosition) {
+        this.specialFoodPosition.set(specialFoodPosition);
+    }
+
+    public int getGameCounter() {
+        return gameCounter.get();
+    }
+
+    public IntegerProperty gameCounterProperty() {
+        return gameCounter;
+    }
+
+    public void setGameCounter(int gameCounter) {
+        this.gameCounter.set(gameCounter);
     }
 }

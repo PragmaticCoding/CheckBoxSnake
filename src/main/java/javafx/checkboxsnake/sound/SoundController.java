@@ -4,6 +4,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.media.AudioClip;
 
+import java.util.Objects;
+
 /**
  * --- here javadoc ---
  *
@@ -11,42 +13,25 @@ import javafx.scene.media.AudioClip;
  */
 public class SoundController {
 
-    private AudioClip audioClipEat = new AudioClip(this.getClass().getResource("/javafx/checkboxsnake/sounds/eat2.wav").toString());
-    private AudioClip audioClipSpecialEat = new AudioClip(this.getClass().getResource("/javafx/checkboxsnake/sounds/eat2.wav").toString());
-    private AudioClip audioClipGameOver = new AudioClip(this.getClass().getResource("/javafx/checkboxsnake/sounds/gameover.mp3").toString());
+    private static final AudioClip audioClipEat = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/eat2.wav")).toString());
+    private static final AudioClip audioClipSpecialEat = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/eatSpecial.wav")).toString());
+    private static final AudioClip audioClipGameOver = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/gameover.mp3")).toString());
+    private static final AudioClip audioClipTimeTick = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/move.wav")).toString());
 
-    private static SoundController instance = null;
-
-    private BooleanProperty soundEnabledProperty = new SimpleBooleanProperty(true);
+    private static final BooleanProperty soundEnabledProperty = new SimpleBooleanProperty(true);
 
     public enum Sound {
         EAT,
         GAME_OVER,
-        SPECIAL_EAT;
+        SPECIAL_EAT,
+        TIME_TICK
     }
 
-    private SoundController() {
-        initGameOverSound();
-    }
-
-    public static SoundController getInstance() {
-        if (instance == null) {
-            instance = new SoundController();
-        }
-
-        return instance;
-    }
-
-    public BooleanProperty soundEnabledProperty() {
+    public static BooleanProperty soundEnabledProperty() {
         return soundEnabledProperty;
     }
 
-    private void initGameOverSound() {
-        audioClipGameOver.setVolume(.3);
-    }
-
-    public void playSound(Sound sound) {
-        System.out.println("play sound " + sound + ". sound enabed " + soundEnabledProperty.get());
+    public static void playSound(Sound sound) {
         if (soundEnabledProperty.get()) {
             switch (sound) {
                 case EAT:
@@ -56,8 +41,13 @@ public class SoundController {
                     audioClipSpecialEat.play();
                     break;
                 case GAME_OVER:
+                    audioClipGameOver.setVolume(.3);
                     audioClipGameOver.play();
                     break;
+                case TIME_TICK:
+                    audioClipTimeTick.setVolume(.6);
+                    audioClipTimeTick.setRate(2.5);
+                    audioClipTimeTick.play();
             }
         }
     }

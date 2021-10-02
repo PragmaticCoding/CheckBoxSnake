@@ -8,10 +8,12 @@ import java.util.Objects;
 
 public class SoundController {
 
-    private static final AudioClip audioClipEat = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/eat2.wav")).toString());
-    private static final AudioClip audioClipSpecialEat = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/eatSpecial.wav")).toString());
-    private static final AudioClip audioClipGameOver = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/gameover.mp3")).toString());
-    private static final AudioClip audioClipTimeTick = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/move.wav")).toString());
+    private static final AudioClip audioClipEat = loadClip("eat2.wav", 1, 1);
+    private static final AudioClip audioClipSpecialEat = loadClip("eatSpecial.wav", 1, 1);
+    private static final AudioClip audioClipGameOver = loadClip("gameover.mp3", 0.3, 1);
+    private static final AudioClip audioClipTimeTick = loadClip("move.wav", 0.6, 2.5);
+    private static final AudioClip audioClipSpecialOn = loadClip("specialAppears.wav", 0.5, 1);
+    private static final AudioClip audioClipSpecialOff = loadClip("specialGoes.wav", 0.5, 1);
 
     private static final BooleanProperty soundEnabledProperty = new SimpleBooleanProperty(true);
 
@@ -19,7 +21,17 @@ public class SoundController {
         EAT,
         GAME_OVER,
         SPECIAL_EAT,
-        TIME_TICK
+        TIME_TICK,
+        SPECIAL_APPEARS,
+        SPECIAL_GOES
+    }
+
+    private static AudioClip loadClip(String fileName, double volume, double rate) {
+        System.out.println(fileName);
+        AudioClip audioClip = new AudioClip(Objects.requireNonNull(SoundController.class.getResource("/javafx/checkboxsnake/sounds/" + fileName)).toString());
+        audioClip.setRate(rate);
+        audioClip.setVolume(volume);
+        return audioClip;
     }
 
     public static BooleanProperty soundEnabledProperty() {
@@ -36,13 +48,16 @@ public class SoundController {
                     audioClipSpecialEat.play();
                     break;
                 case GAME_OVER:
-                    audioClipGameOver.setVolume(.3);
                     audioClipGameOver.play();
                     break;
                 case TIME_TICK:
-                    audioClipTimeTick.setVolume(.6);
-                    audioClipTimeTick.setRate(2.5);
                     audioClipTimeTick.play();
+                    break;
+                case SPECIAL_APPEARS:
+                    audioClipSpecialOn.play();
+                    break;
+                case SPECIAL_GOES:
+                    audioClipSpecialOff.play();
             }
         }
     }

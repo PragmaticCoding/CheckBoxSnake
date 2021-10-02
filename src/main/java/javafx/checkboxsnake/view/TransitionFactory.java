@@ -1,4 +1,4 @@
-package javafx.checkboxsnake.misc;
+package javafx.checkboxsnake.view;
 
 import javafx.animation.*;
 import javafx.event.ActionEvent;

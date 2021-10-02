@@ -1,4 +1,4 @@
-package javafx.checkboxsnake.pane;
+package javafx.checkboxsnake.view;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableBooleanValue;

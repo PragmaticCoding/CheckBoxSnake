@@ -1,4 +1,4 @@
-package javafx.checkboxsnake.game;
+package javafx.checkboxsnake.data;
 
 public class GameSettings {
     public static int GAME_FIELD_SIZE = 15;

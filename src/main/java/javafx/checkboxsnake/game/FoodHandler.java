@@ -1,71 +1,81 @@
 package javafx.checkboxsnake.game;
 
-import javafx.checkboxsnake.data.Food;
+import javafx.checkboxsnake.data.GameCounter;
+import javafx.checkboxsnake.data.GameSettings;
 import javafx.checkboxsnake.data.Position;
 import javafx.checkboxsnake.data.ViewModel;
 
-public class FoodHandler {
+import java.util.Random;
 
-    private final ViewModel viewModel;
-    private Food regularFood;
-    private Food specialFood;
+public class FoodHandler extends PulseHandler {
+
+    private final static Random random = new Random();
+    private long specialFoodCreateTime = 0;
+    private final GameCounter gameCounter;
 
 
-    public FoodHandler(ViewModel viewModel) {
-        this.viewModel = viewModel;
+    public FoodHandler(ViewModel viewModel, GameCounter gameCounter) {
+        super(viewModel);
+        this.gameCounter = gameCounter;
     }
 
-    public void pulse(Position snakeHeadPosition) {
-        consumeFoodIfHit(snakeHeadPosition, regularFood);
-        consumeFoodIfHit(snakeHeadPosition, specialFood);
+    public void handlePulse() {
+        consumeFoodIfHit(viewModel.getFoodPosition());
+        consumeFoodIfHit(viewModel.getSpecialFoodPosition());
         removeFoodIfExpired();
-        createSpecialFoodIfRequired(snakeHeadPosition);
-        updateModel();
+        createSpecialFoodIfRequired();
     }
 
-    private void createSpecialFoodIfRequired(Position snakeHeadPosition) {
-        if ((viewModel.getGameCounter() % GameSettings.GAME_LOOPS_TILL_SPECIAL_FOOD) == 0) {
-            specialFood = Food.createRandomFood(snakeHeadPosition, true, viewModel.getGameCounter());
+    private void createSpecialFoodIfRequired() {
+        if ((gameCounter.getCount() % GameSettings.GAME_LOOPS_TILL_SPECIAL_FOOD) == 0) {
+            viewModel.setSpecialFoodPosition(createRandomFood());
+            specialFoodCreateTime = gameCounter.getCount();
         }
     }
 
-    private void consumeFoodIfHit(Position snakeHeadPosition, Food food) {
-        if ((food != null) && checkFoodEaten(food)) {
-            consumeFood(food, snakeHeadPosition);
+    private void consumeFoodIfHit(Position foodPosition) {
+        if (checkIfFoodHit(foodPosition)) {
+            consumeFood(foodPosition);
         }
     }
 
-    private void updateModel() {
-        viewModel.setFoodPosition((regularFood != null) ? regularFood.getPosition() : null);
-        viewModel.setSpecialFoodPosition((specialFood != null) ? specialFood.getPosition() : null);
-    }
-
-    private boolean checkFoodEaten(Food food) {
-        return viewModel.getSnakePixels().contains(food.getPosition());
+    private boolean checkIfFoodHit(Position foodPosition) {
+        return viewModel.getHeadPosition().equals(foodPosition);
     }
 
     private void removeFoodIfExpired() {
-        if (regularFood.isTimeToGo(viewModel.getGameCounter())) {
-            regularFood = null;
-        }
-        if ((specialFood != null) && specialFood.isTimeToGo(viewModel.getGameCounter())) {
-            specialFood = null;
+        if ((!viewModel.getSpecialFoodPosition().isNowhere()) && isTimeForSpecialFoodToGo()) {
+            viewModel.setSpecialFoodPosition(Position.NOWHERE);
         }
     }
 
-    private void consumeFood(Food food, Position snakeHeadPosition) {
-        viewModel.setPoints(viewModel.getPoints() + (food.isSpecial() ? 5 : 1));
-        if (food.isSpecial()) {
-            specialFood = null;
+    public boolean isTimeForSpecialFoodToGo() {
+        return (gameCounter.getCount() - specialFoodCreateTime) > GameSettings.GAME_LOOPS_SPECIAL_FOOD_LIFE;
+    }
+
+    private void consumeFood(Position foodPosition) {
+        boolean isSpecialFood = foodPosition.equals(viewModel.getSpecialFoodPosition());
+        viewModel.setPoints(viewModel.getPoints() + (isSpecialFood ? 5 : 1));
+        if (isSpecialFood) {
+            viewModel.setSpecialFoodPosition(Position.NOWHERE);
         } else {
-            regularFood = Food.createRandomFood(snakeHeadPosition, false, viewModel.getGameCounter());
+            viewModel.setFoodPosition(createRandomFood());
         }
     }
 
 
-    public void reset(Position snakeHeadPosition) {
-        regularFood = Food.createRandomFood(snakeHeadPosition, false, 0);
-        specialFood = null;
-        updateModel();
+    public void reset(Position startingPosition) {
+        viewModel.setFoodPosition(createRandomFood());
+        viewModel.setSpecialFoodPosition(Position.NOWHERE);
+    }
+
+    public Position createRandomFood() {
+        Position randomPosition;
+        do {
+            int randomX = random.nextInt(GameSettings.GAME_FIELD_SIZE);
+            int randomY = random.nextInt(GameSettings.GAME_FIELD_SIZE);
+            randomPosition = new Position(randomX, randomY);
+        } while (viewModel.getHeadPosition().isNear(randomPosition));
+        return randomPosition;
     }
 }

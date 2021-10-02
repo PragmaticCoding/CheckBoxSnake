@@ -1,4 +1,4 @@
-package javafx.checkboxsnake.pane;
+package javafx.checkboxsnake.view;
 
 import javafx.checkboxsnake.sound.SoundController;
 import javafx.event.ActionEvent;

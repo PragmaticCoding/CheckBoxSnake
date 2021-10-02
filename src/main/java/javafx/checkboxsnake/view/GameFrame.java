@@ -1,11 +1,9 @@
-package javafx.checkboxsnake.game;
+package javafx.checkboxsnake.view;
 
 import javafx.checkboxsnake.data.Direction;
+import javafx.checkboxsnake.data.GameSettings;
 import javafx.checkboxsnake.data.Position;
 import javafx.checkboxsnake.data.ViewModel;
-import javafx.checkboxsnake.pane.GameOverPane;
-import javafx.checkboxsnake.pane.StartPane;
-import javafx.checkboxsnake.pixel.CheckBoxPixel;
 import javafx.checkboxsnake.sound.SoundController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -27,15 +25,22 @@ public class GameFrame extends StackPane {
         GameOverPane gameOverPane = new GameOverPane(() -> startGame(gameStarter), viewModel.pointsProperty(), viewModel.gameOverProperty());
         getChildren().addAll(new VBox(20, pointsBox, initGameField()), new StartPane(() -> startGame(gameStarter)), gameOverPane);
         setPadding(new Insets(25, 15, 25, 15));
+        initializeSoundListeners(viewModel);
+    }
+
+    private void initializeSoundListeners(ViewModel viewModel) {
         viewModel.gameOverProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 SoundController.playSound(SoundController.Sound.GAME_OVER);
             }
         });
         viewModel.pointsProperty().addListener(((observable, oldValue, newValue) -> ateFood(((int) newValue > 0) && ((int) newValue > ((int) oldValue + 1)))));
-        viewModel.gameCounterProperty().addListener((observable, oldValue, newValue) -> {
-            if ((int) newValue > (int) oldValue) {
-                SoundController.playSound(SoundController.Sound.TIME_TICK);
+        viewModel.headPositionProperty().addListener(invalidated -> SoundController.playSound(SoundController.Sound.TIME_TICK));
+        viewModel.specialFoodPositionProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isNowhere()) {
+                SoundController.playSound(SoundController.Sound.SPECIAL_APPEARS);
+            } else if (!viewModel.getHeadPosition().equals(oldValue)) {
+                SoundController.playSound(SoundController.Sound.SPECIAL_GOES);
             }
         });
     }
@@ -46,10 +51,11 @@ public class GameFrame extends StackPane {
         gameField.setVgap(1);
         for (int column = 0; column < GameSettings.GAME_FIELD_SIZE; column++) {
             for (int row = 0; row < GameSettings.GAME_FIELD_SIZE; row++) {
-                CheckBoxPixel pixel = new CheckBoxPixel(new Position(column, row),
+                Pixel pixel = new Pixel(new Position(column, row),
                         viewModel.getSnakePixels(),
                         viewModel.foodPositionProperty(),
-                        viewModel.specialFoodPositionProperty());
+                        viewModel.specialFoodPositionProperty(),
+                        viewModel.headPositionProperty());
                 gameField.add(pixel.getNode(), column, row);
             }
         }

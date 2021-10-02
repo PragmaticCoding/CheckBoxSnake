@@ -1,9 +1,8 @@
-package javafx.checkboxsnake.game;
+package javafx.checkboxsnake.view;
 
 import javafx.animation.ParallelTransition;
 import javafx.animation.Transition;
 import javafx.beans.value.ObservableIntegerValue;
-import javafx.checkboxsnake.misc.TransitionFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;

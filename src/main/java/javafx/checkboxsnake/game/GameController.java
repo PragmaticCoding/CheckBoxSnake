@@ -1,11 +1,14 @@
 package javafx.checkboxsnake.game;
 
 import javafx.application.Platform;
+import javafx.checkboxsnake.data.GameCounter;
+import javafx.checkboxsnake.data.GameSettings;
 import javafx.checkboxsnake.data.Position;
-import javafx.checkboxsnake.data.Snake;
 import javafx.checkboxsnake.data.ViewModel;
+import javafx.checkboxsnake.view.GameFrame;
 import javafx.scene.layout.StackPane;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,14 +16,13 @@ public class GameController {
 
     private final GameFrame gameFrame;
     private Timer gameTimer;
-    private final Snake snake;
-    private final FoodHandler foodHandler;
     private final ViewModel viewModel;
+    private final List<PulseHandler> pulseHandlers;
+    private final GameCounter gameCounter = new GameCounter();
 
     public GameController() {
         viewModel = new ViewModel();
-        snake = new Snake(viewModel);
-        foodHandler = new FoodHandler(viewModel);
+        pulseHandlers = List.of(new SnakeHandler(viewModel), new FoodHandler(viewModel, gameCounter));
         this.gameFrame = new GameFrame(viewModel, this::startGame);
     }
 
@@ -29,7 +31,7 @@ public class GameController {
     }
 
     public void startGame() {
-        viewModel.setGameCounter(1);
+        gameCounter.resetCounter();
         viewModel.setGameOver(false);
         viewModel.setPoints(0);
         initStartPositions();
@@ -48,21 +50,20 @@ public class GameController {
     }
 
     private void gamePulse() {
-        snake.pulse();
-        foodHandler.pulse(snake.getHead());
+        pulseHandlers.forEach(PulseHandler::handlePulse);
         stopGameIfRequired();
-        viewModel.setGameCounter(viewModel.getGameCounter() + 1);
+        gameCounter.incrementCount();
     }
 
     private void stopGameIfRequired() {
-        if (!snake.getHead().isPositionInBounds() || snake.isClashing()) {
+        if (viewModel.getSnakePixels().stream().anyMatch(Position::isNowhere)) {
             gameTimer.cancel();
             viewModel.setGameOver(true);
         }
     }
 
     private void initStartPositions() {
-        snake.resetSnake(new Position(GameSettings.GAME_FIELD_SIZE / 2, GameSettings.GAME_FIELD_SIZE / 2));
-        foodHandler.reset(snake.getHead());
+        Position startingPosition = new Position(GameSettings.GAME_FIELD_SIZE / 2, GameSettings.GAME_FIELD_SIZE / 2);
+        pulseHandlers.forEach(pulseHandler -> pulseHandler.reset(startingPosition));
     }
 }

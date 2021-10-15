@@ -1,6 +1,6 @@
 package javafx.checkboxsnake.game;
 
-import javafx.application.Platform;
+import javafx.animation.AnimationTimer;
 import javafx.checkboxsnake.data.GameCounter;
 import javafx.checkboxsnake.data.GameSettings;
 import javafx.checkboxsnake.data.Position;
@@ -9,16 +9,14 @@ import javafx.checkboxsnake.view.GameFrame;
 import javafx.scene.layout.StackPane;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameController {
 
     private final GameFrame gameFrame;
-    private Timer gameTimer;
     private final ViewModel viewModel;
     private final List<PulseHandler> pulseHandlers;
     private final GameCounter gameCounter = new GameCounter();
+    private AnimationTimer gameTimer;
 
     public GameController() {
         viewModel = new ViewModel();
@@ -39,17 +37,21 @@ public class GameController {
     }
 
     private void runGameLoop() {
-        TimerTask task = new TimerTask() {
+        final long[] lastPulse = {0};
+        gameTimer = new AnimationTimer() {
             @Override
-            public void run() {
-                Platform.runLater(() -> gamePulse());
+            public void handle(long now) {
+                if ((now - lastPulse[0]) > GameSettings.GAME_SPEED) {
+                    gamePulse(now);
+                    lastPulse[0] = now;
+                }
             }
         };
-        gameTimer = new Timer();
-        gameTimer.schedule(task, 0, 200);
+        gameTimer.start();
     }
 
-    private void gamePulse() {
+    private void gamePulse(long now) {
+
         pulseHandlers.forEach(PulseHandler::handlePulse);
         stopGameIfRequired();
         gameCounter.incrementCount();
@@ -57,7 +59,7 @@ public class GameController {
 
     private void stopGameIfRequired() {
         if (viewModel.getSnakePixels().stream().anyMatch(Position::isNowhere)) {
-            gameTimer.cancel();
+            gameTimer.stop();
             viewModel.setGameOver(true);
         }
     }
